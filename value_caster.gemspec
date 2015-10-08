@@ -32,4 +32,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'slack-api', '~> 1.1.6'
   spec.add_dependency 'google_drive'
+  spec.add_dependency 'redis-objects'
 end
