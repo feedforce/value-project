@@ -22,7 +22,7 @@ end
 
 DEFAULT_CHANNEL = ENV['SLACK_NOTIFICATION_CHANNEL']
 DEFAULT_USERNAME = "valueくん"
-DEFAULT_ICON_EMOJI = ":feed:"
+DEFAULT_ICON_EMOJI = ":value:"
 
 slack_client = Slack::Client.new
 
