@@ -16,7 +16,7 @@ Slack.configure do |config|
   config.token = ENV['SLACK_API_TOKEN']
 end
 
-DEFAULT_CHANNEL = "#mogi-sandbox"
+DEFAULT_CHANNEL = ENV['SLACK_NOTIFICATION_CHANNEL']
 DEFAULT_USERNAME = "valueくん"
 DEFAULT_ICON_EMOJI = ":feed:"
 
