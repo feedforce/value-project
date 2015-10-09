@@ -1,8 +1,12 @@
 #!/usr/bin/env ruby
 
 require 'bundler'
-require 'slack'
 Bundler.require
+require 'slack'
+require 'redis/objects'
+require 'redis/lock'
+require 'google/api_client'
+require 'google_drive'
 
 module Slack
   class Client
