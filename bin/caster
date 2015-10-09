@@ -1,1 +1,105 @@
 #!/usr/bin/env ruby
+
+require 'bundler'
+require 'slack'
+Bundler.require
+
+module Slack
+  class Client
+    def reactions_list(options = {})
+      post('reactions.list', options)
+    end
+  end
+end
+
+Slack.configure do |config|
+  config.token = ENV['SLACK_API_TOKEN']
+end
+
+DEFAULT_CHANNEL = "#mogi-sandbox"
+DEFAULT_USERNAME = "valueくん"
+DEFAULT_ICON_EMOJI = ":feed:"
+
+slack_client = Slack::Client.new
+
+rtm = Slack::Client.new.realtime
+
+class SpreadSheet
+  SHEET_ID = '18DwKbuMfj22H9XWm-HigilxZHtFa_n8F0fwB_K-fNnE'
+
+  def initialize
+    signet = Signet::OAuth2::Client.new(
+      client_id: ENV['GOOGLE_CLIENT_ID'],
+      client_secret: ENV['GOOGLE_CLIENT_SECRET'],
+      authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
+      token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
+      scope: ["https://www.googleapis.com/auth/drive"],
+      refresh_token: ENV['GOOGLE_REFRESH_TOKEN']
+    )
+
+    signet.refresh!
+    @work_sheet = GoogleDrive.login_with_oauth(signet.access_token)
+                  .spreadsheet_by_key(SHEET_ID)
+                  .worksheets[0]
+  end
+
+  attr_reader :work_sheet
+
+  def self.update_lock(&block)
+    Redis::Lock.new('google-drive-update', timeout: 10).lock do
+      yield
+    end
+  end
+
+  def append(data)
+    data.each.with_index(1) do |d, i|
+      @work_sheet[max_row_size + 1, i] = d
+    end
+  end
+
+  def save
+    @work_sheet.save
+  end
+
+  private
+
+  def max_row_size
+    @max_row_size ||= @work_sheet.rows.size
+  end
+end
+
+rtm.on(:reaction_added) do |data|
+  next if data['reaction'] != 'feed'
+
+  user_info = slack_client.users_info(user: data['user'])
+  reacted_user_name = user_info['user']['name']
+
+  reactions = slack_client.reactions_list(user: data['user'])
+
+  user_info = slack_client.users_info(user: data['user'])
+
+  username  = user_info['user']['name']
+  permalink = reactions['items'].first['message']['permalink']
+  text      = reactions['items'].first['message']['text']
+  count     = reactions['items'].first['message']['reactions'].find {|react| react['name'] == 'feed' }['count']
+  timestamp = Time.at(reactions['items'].first['message']['ts'].to_i).strftime('%Y/%m/%d %H:%M:%S')
+
+  data = [ username, text, permalink, reacted_user_name, count, timestamp ]
+
+  slack_client.chat_postMessage(
+    channel: DEFAULT_CHANNEL,
+    text: "#{reacted_user_name} さんが ナイス value! と言っています\n> #{permalink}",
+    username: DEFAULT_USERNAME,
+    icon_emoji: DEFAULT_ICON_EMOJI,
+    unfurl_links: true
+  )
+
+  SpreadSheet.update_lock do
+    spread_sheet = SpreadSheet.new
+    spread_sheet.append(data)
+    spread_sheet.save
+  end
+end
+
+rtm.start
+
