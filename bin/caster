@@ -73,7 +73,7 @@ class SpreadSheet
 end
 
 rtm.on(:reaction_added) do |data|
-  next if data['reaction'] != 'feed'
+  next if data['reaction'] != 'value'
 
   user_info = slack_client.users_info(user: data['user'])
   reacted_user_name = user_info['user']['name']
