@@ -73,7 +73,8 @@ class SpreadSheet
 end
 
 rtm.on(:reaction_added) do |data|
-  next if data['reaction'] != 'value'
+  reaction = DEFAULT_ICON_EMOJI.gsub(':', '')
+  next if data['reaction'] != reaction
 
   user_info = slack_client.users_info(user: data['user'])
   reacted_user_name = user_info['user']['name']
@@ -85,7 +86,7 @@ rtm.on(:reaction_added) do |data|
   username  = user_info['user']['name']
   permalink = reactions['items'].first['message']['permalink']
   text      = reactions['items'].first['message']['text']
-  count     = reactions['items'].first['message']['reactions'].find {|react| react['name'] == 'feed' }['count']
+  count     = reactions['items'].first['message']['reactions'].find {|react| react['name'] == reaction }['count']
   timestamp = Time.at(reactions['items'].first['message']['ts'].to_i).strftime('%Y/%m/%d %H:%M:%S')
 
   data = [ username, text, permalink, reacted_user_name, count, timestamp ]
