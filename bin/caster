@@ -16,17 +16,13 @@ module Slack
   end
 end
 
-Slack.configure do |config|
-  config.token = ENV['SLACK_API_TOKEN']
-end
-
 DEFAULT_CHANNEL = ENV['SLACK_NOTIFICATION_CHANNEL']
 DEFAULT_USERNAME = "valueくん"
 DEFAULT_ICON_EMOJI = ":value:"
 
-slack_client = Slack::Client.new
+slack_client = Slack::Client.new(token: ENV['SLACK_BOT_API_TOKEN'])
 
-rtm = Slack::Client.new.realtime
+rtm = Slack::Client.new(token: ENV['SLACK_BOT_API_TOKEN']).realtime
 
 class SpreadSheet
   SHEET_ID = '18DwKbuMfj22H9XWm-HigilxZHtFa_n8F0fwB_K-fNnE'
@@ -99,12 +95,31 @@ rtm.on(:reaction_added) do |data|
     unfurl_links: true
   )
 
-  SpreadSheet.update_lock do
-    spread_sheet = SpreadSheet.new
-    spread_sheet.append(data)
-    spread_sheet.save
+  # SpreadSheet.update_lock do
+  #   spread_sheet = SpreadSheet.new
+  #   spread_sheet.append(data)
+  #   spread_sheet.save
+  # end
+end
+
+rtm.on(:channel_created) do |data|
+  s = Slack::Client.new(token: ENV['SLACK_USER_API_TOKEN'])
+  s.channels_join(name: data['channel']['name'])
+  s.channels_invite(channel: data['channel']['id'], user: 'U0BFF4VB7')
+  s.channels_leave(channel: data['channel']['id'])
+end
+
+s = Slack::Client.new(token: ENV['SLACK_USER_API_TOKEN'])
+channel_list = s.channels_list
+
+channel_list['channels'].each do |channel|
+  result = s.channels_invite(channel: channel['id'], user: 'U0BFF4VB7')
+
+  unless result['ok']
+    s.channels_join(name: channel['name'])
+    s.channels_invite(channel: channel['id'], user: 'U0BFF4VB7')
+    s.channels_leave(channel: channel['id'])
   end
 end
 
 rtm.start
-
