@@ -95,11 +95,11 @@ rtm.on(:reaction_added) do |data|
     unfurl_links: true
   )
 
-  # SpreadSheet.update_lock do
-  #   spread_sheet = SpreadSheet.new
-  #   spread_sheet.append(data)
-  #   spread_sheet.save
-  # end
+  SpreadSheet.update_lock do
+    spread_sheet = SpreadSheet.new
+    spread_sheet.append(data)
+    spread_sheet.save
+  end
 end
 
 rtm.on(:channel_created) do |data|
