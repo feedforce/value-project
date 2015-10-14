@@ -113,6 +113,8 @@ s = Slack::Client.new(token: ENV['SLACK_USER_API_TOKEN'])
 channel_list = s.channels_list
 
 channel_list['channels'].each do |channel|
+  next if channel['members'].include?('U0BFF4VB7')
+
   result = s.channels_invite(channel: channel['id'], user: 'U0BFF4VB7')
 
   unless result['ok']
