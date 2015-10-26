@@ -7,10 +7,19 @@ module ValueCaster
 
     def start
       setup
+      regist
+      start!
+    end
+
+    def start!
       @rtm.start
     end
 
     def setup
+    end
+
+    def regist
+      EventRegister.regist(@rtm)
     end
   end
 end
