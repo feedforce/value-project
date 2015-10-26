@@ -11,7 +11,7 @@ module ValueCaster
     def regist
       ValueCaster::EventRouter.event_collection.each do |name, event|
         @rtm.on(name) do |data|
-          event.action_class.new(data).call
+          event.action_class.new.call(data)
         end
       end
     end
