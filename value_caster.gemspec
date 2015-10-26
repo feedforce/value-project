@@ -30,6 +30,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "pry"
+  spec.add_development_dependency "minitest-emoji"
+  spec.add_development_dependency "minitest-power_assert"
 
   spec.add_dependency 'slack-api', '~> 1.1.6'
   spec.add_dependency 'google_drive'
