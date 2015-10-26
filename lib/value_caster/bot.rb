@@ -6,7 +6,11 @@ module ValueCaster
     end
 
     def start
+      setup
       @rtm.start
+    end
+
+    def setup
     end
   end
 end
