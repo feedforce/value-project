@@ -5,6 +5,6 @@ require 'value_caster/event_router'
 require 'value_caster/event_register'
 require 'value_caster/action'
 
-module ValueCaster
-  # Your code goes here...
+ValueCaster::EventRouter.draw do
+  map :reaction_added, action: ValueCaster::Action::ValueReaction
 end
