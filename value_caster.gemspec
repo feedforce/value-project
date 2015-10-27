@@ -37,4 +37,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'google_drive'
   spec.add_dependency 'redis-objects'
   spec.add_dependency 'activesupport'
+  spec.add_dependency 'hashie'
 end
