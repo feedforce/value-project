@@ -1,3 +1,4 @@
+require 'hashie/mash'
 require "value_caster/version"
 require 'value_caster/bot'
 require 'value_caster/event'
