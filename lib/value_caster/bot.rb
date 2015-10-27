@@ -4,13 +4,13 @@ module ValueCaster
       @rtm = Slack::Client.new(options).realtime
     end
 
-    def start
+    def run
       setup
       regist
-      start!
+      start
     end
 
-    def start!
+    def start
       @rtm.start
     end
 
