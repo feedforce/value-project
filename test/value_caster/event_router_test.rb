@@ -4,6 +4,14 @@ require './lib/value_caster/event'
 
 describe ValueCaster::EventRouter do
   describe 'draw' do
+    before do
+      ValueCaster::EventRouter.event_collection.clear
+    end
+
+    after do
+      ValueCaster::EventRouter.event_collection.clear
+    end
+
     it 'event collection has event names in hash after ValueCaster::EventRouter#draw' do
       ValueCaster::EventRouter.draw do
         map :event1, action: :action1
