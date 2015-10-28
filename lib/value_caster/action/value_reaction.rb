@@ -69,7 +69,7 @@ module ValueCaster
         end
 
         def reacted_username
-          slack_username(data.user)
+          @reacted_username ||= slack_username(data.user)
         end
 
         def text
