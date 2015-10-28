@@ -10,5 +10,5 @@ require 'value_caster/event_register'
 require 'value_caster/action'
 
 ValueCaster::EventRouter.draw do
-  map :reaction_added, action: :value_action
+  map :reaction_added, action: :value_reaction
 end
