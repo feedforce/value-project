@@ -1,5 +1,7 @@
 require "google/api_client"
 require "google_drive"
+require 'redis/objects'
+require 'redis/lock'
 
 module ValueCaster
   module Action
