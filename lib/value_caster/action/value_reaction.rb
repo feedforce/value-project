@@ -48,17 +48,6 @@ module ValueCaster
         end
       end
 
-      def reacted_message(user_id)
-        reactions = @client.reactions_list(user: user_id)
-        reactions = Hashie::Mash.new(reactions)
-        SlackMessage.new(reactions.items.first.message)
-      end
-
-      def slack_username(user_id)
-        user_info = @client.users_info(user: user_id)
-        Hashie::Mash.new(user_info).user.name
-      end
-
       class DeliveryMessage
         def initialize(data)
           @data   = data
@@ -104,16 +93,6 @@ module ValueCaster
         def slack_username(user_id)
           user_info = @client.users_info(user: user_id)
           Hashie::Mash.new(user_info).user.name
-        end
-      end
-
-      class SlackMessage < ::Hashie::Mash
-        def count
-          reactions.find {|react| react.name == 'value' }.count
-        end
-
-        def timestamp
-          Time.at(ts.to_i).strftime('%Y/%m/%d %H:%M:%S')
         end
       end
 
