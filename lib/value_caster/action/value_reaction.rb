@@ -67,6 +67,38 @@ module ValueCaster
         Hashie::Mash.new(user_info).user.name
       end
 
+      class DeliveryMessage
+        def initialize(data)
+          @data   = data
+          @client = Slack::Client.new(token: ENV['SLACK_BOT_API_TOKEN'])
+        end
+
+        attr_reader :data
+
+        def reacted_username
+          slack_username(data.user)
+        end
+
+        def reacted_message
+          reactions = @client.reactions_list(user: data.user)
+          reactions = Hashie::Mash.new(reactions)
+          reactions.items.first.message
+        end
+
+        def slack_username(user_id)
+          user_info = @client.users_info(user: user_id)
+          Hashie::Mash.new(user_info).user.name
+        end
+
+        def count
+          # TODO
+        end
+
+        def timestamp
+          # TODO
+        end
+      end
+
       class SlackMessage < ::Hashie::Mash
         def count
           reactions.find {|react| react.name == 'value' }.count
