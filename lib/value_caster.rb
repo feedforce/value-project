@@ -11,5 +11,6 @@ require 'value_caster/event_register'
 require 'value_caster/action'
 
 ValueCaster::EventRouter.draw do
-  map :reaction_added, action: :value_reaction
+  map :reaction_added,  action: :value_reaction
+  map :channel_created, action: :bot_invitation
 end
