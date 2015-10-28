@@ -73,7 +73,7 @@ module ValueCaster
         end
 
         def timestamp
-          ts.to_i.strftime('%Y/%m/%d %H:%M:%S')
+          Time.at(ts.to_i).strftime('%Y/%m/%d %H:%M:%S')
         end
       end
 
