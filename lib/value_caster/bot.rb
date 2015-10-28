@@ -1,3 +1,5 @@
+require 'slack'
+
 module ValueCaster
   class Bot
     def initialize(options = {})
