@@ -1,7 +1,11 @@
 module ValueCaster
   class Bot
-    def initialize(options = {})
-      @rtm = Slack::Client.new(options).realtime
+    def initialize
+      @rtm = Slack::Client.new(token: ENV['SLACK_BOT_API_TOKEN']).realtime
+    end
+
+    def self.run
+      new.run
     end
 
     def run
