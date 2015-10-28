@@ -18,16 +18,11 @@ module ValueCaster
       end
 
       def post_to_slack(data)
-        user_id = data.user
-
-        reacted_username = slack_username(user_id)
-        reacted_message  = reacted_message(user_id)
-
-        text = "#{reacted_username} さんが ナイス value! と言っています\n> #{reacted_message.permalink}"
+        message = DeliveryMessage.new(data)
 
         @client.chat_postMessage(
           channel: ENV['SLACK_NOTIFICATION_CHANNEL'],
-          text: text,
+          text: "#{message.reacted_username} さんが ナイス value! と言っています\n> #{message.permalink}",
           username: 'valueくん',
           icon_emoji: ':value:',
           unfurl_links: true
@@ -80,9 +75,15 @@ module ValueCaster
         end
 
         def reacted_message
-          reactions = @client.reactions_list(user: data.user)
-          reactions = Hashie::Mash.new(reactions)
-          reactions.items.first.message
+          @reacted_message ||= (
+            reactions = @client.reactions_list(user: data.user)
+            reactions = Hashie::Mash.new(reactions)
+            reactions.items.first.message
+          )
+        end
+
+        def permalink
+          reacted_message.permalink
         end
 
         def slack_username(user_id)
