@@ -9,7 +9,7 @@ module ValueCaster
     attr_reader :name, :action, :method
 
     def action_class
-      "ValueCaster::Action::#{action.classify}".constantize
+      "ValueCaster::Action::#{action.to_s.classify}".constantize
     end
   end
 end
