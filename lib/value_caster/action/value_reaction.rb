@@ -3,6 +3,15 @@ require "google_drive"
 require 'redis/objects'
 require 'redis/lock'
 
+# monkey patch
+module Slack
+  class Client
+    def reactions_list(options = {})
+      post('reactions.list', options)
+    end
+  end
+end
+
 module ValueCaster
   module Action
     class ValueReaction < Base
