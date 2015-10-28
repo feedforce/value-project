@@ -77,7 +77,7 @@ module ValueCaster
         end
       end
 
-      class SpreadSheed
+      class SpreadSheet
         SHEET_ID = '18DwKbuMfj22H9XWm-HigilxZHtFa_n8F0fwB_K-fNnE'
 
         def initialize
