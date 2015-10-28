@@ -13,13 +13,13 @@ module ValueCaster
       def call(data)
         return if data.reaction != 'value'
 
-        post_to_slack(data)
-        append_to_spread_sheet(data)
-      end
-
-      def post_to_slack(data)
         message = DeliveryMessage.new(data)
 
+        post_to_slack(message)
+        append_to_spread_sheet(message)
+      end
+
+      def post_to_slack(message)
         @client.chat_postMessage(
           channel: ENV['SLACK_NOTIFICATION_CHANNEL'],
           text: "#{message.reacted_username} さんが ナイス value! と言っています\n> #{message.permalink}",
@@ -29,9 +29,7 @@ module ValueCaster
         )
       end
 
-      def append_to_spread_sheet(data)
-        message = DeliveryMessage.new(data)
-
+      def append_to_spread_sheet(message)
         row = [
           message.announcer,
           message.text,
