@@ -30,18 +30,15 @@ module ValueCaster
       end
 
       def append_to_spread_sheet(data)
-        user_id = data.user
-
-        reacted_username = slack_username(user_id)
-        reacted_message  = reacted_message(user_id)
+        message = DeliveryMessage.new(data)
 
         row = [
-          reacted_message.username,
-          reacted_message.text,
-          reacted_message.permalink,
-          reacted_username,
-          reacted_message.count,
-          reacted_message.timestamp,
+          message.announcer,
+          message.text,
+          message.permalink,
+          message.reacted_username,
+          message.reaction_count,
+          message.timestamp,
         ]
 
         SpreadSheet.update_lock do
@@ -70,9 +67,31 @@ module ValueCaster
 
         attr_reader :data
 
+        def announcer
+          slack_username(reacted_message.user)
+        end
+
+        def permalink
+          reacted_message.permalink
+        end
+
+        def reaction_count
+          reacted_message.reactions.find {|react| react.name == 'value' }['count']
+        end
+
         def reacted_username
           slack_username(data.user)
         end
+
+        def text
+          reacted_message.text
+        end
+
+        def timestamp
+          Time.at(reacted_message.ts.to_i).strftime('%Y/%m/%d %H:%M:%S')
+        end
+
+        private
 
         def reacted_message
           @reacted_message ||= (
@@ -82,21 +101,9 @@ module ValueCaster
           )
         end
 
-        def permalink
-          reacted_message.permalink
-        end
-
         def slack_username(user_id)
           user_info = @client.users_info(user: user_id)
           Hashie::Mash.new(user_info).user.name
-        end
-
-        def count
-          # TODO
-        end
-
-        def timestamp
-          # TODO
         end
       end
 
