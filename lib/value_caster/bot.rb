@@ -19,6 +19,7 @@ module ValueCaster
     end
 
     def setup
+      SlackChannel.invite_all
     end
 
     def regist
