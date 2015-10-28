@@ -3,6 +3,7 @@ require 'active_support'
 require 'active_support/core_ext'
 require 'slack'
 require "value_caster/version"
+require 'value_caster/concern/slack_channel'
 require 'value_caster/bot'
 require 'value_caster/event'
 require 'value_caster/event_router'
