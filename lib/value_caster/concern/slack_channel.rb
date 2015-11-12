@@ -14,7 +14,7 @@ module ValueCaster
 
     def invite_all
       all_channels.each do |channel|
-        next if channel.members.include?(BOT_USER_ID)
+        next if channel.members.include?(BOT_USER_ID) || channel.is_archived?
 
         result = client.channels_invite(channel: channel.id, user: BOT_USER_ID)
 
