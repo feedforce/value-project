@@ -15,6 +15,7 @@ module ValueCaster
     end
 
     def start
+      logger.info 'Run Slack realtime client start...'
       @rtm.start
     end
 
@@ -24,6 +25,12 @@ module ValueCaster
 
     def regist
       EventRegister.regist(@rtm)
+    end
+
+    private
+
+    def logger
+      Logger.logger
     end
   end
 end
