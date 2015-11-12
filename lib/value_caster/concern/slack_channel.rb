@@ -25,15 +25,25 @@ module ValueCaster
     end
 
     def leave_bot(channel)
+      logger.info "User who has token #{@client.token} invites Bot(id: #{BOT_USER_ID}) in #{channel.name}"
+
       client.channels_join(name: channel.name)
       client.channels_invite(channel: channel.id, user: BOT_USER_ID)
       client.channels_leave(channel: channel.id)
+
+      logger.info "User who has token #{@client.token} invited Bot(id: #{BOT_USER_ID}) in #{channel.name}"
+
+      channel
     end
 
     private
 
     def all_channels
       Hashie::Mash.new(@client.channels_list).channels
+    end
+
+    def logger
+      Logger.logger
     end
   end
 end
