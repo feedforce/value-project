@@ -29,13 +29,19 @@ module ValueCaster
       end
 
       def post_to_slack(message)
+        text = "#{message.reacted_username} さんが ナイス value! と言っています\n> #{message.permalink}"
+
+        logger.info "Post message to slack `#{text}`"
+
         @client.chat_postMessage(
           channel: ENV['SLACK_NOTIFICATION_CHANNEL'],
-          text: "#{message.reacted_username} さんが ナイス value! と言っています\n> #{message.permalink}",
+          text: text,
           username: 'valueくん',
           icon_emoji: ':value:',
           unfurl_links: true
         )
+
+        logger.info "Finish to post message to slack `#{text}`"
       end
 
       def append_to_spread_sheet(message)
@@ -48,11 +54,19 @@ module ValueCaster
           message.timestamp,
         ]
 
+        logger.info "Append message to Google Spread Sheet `#{row.join(',')}`"
+
         SpreadSheet.update_lock do
           spread_sheet = SpreadSheet.new
           spread_sheet.append(row)
           spread_sheet.save
         end
+
+        logger.info "Finish to append message to Google Spread Sheet `#{row.join(',')}`"
+      end
+
+      def logger
+        Logger.logger
       end
 
       class DeliveryMessage

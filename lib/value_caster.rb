@@ -9,6 +9,7 @@ require 'value_caster/event'
 require 'value_caster/event_router'
 require 'value_caster/event_register'
 require 'value_caster/action'
+require "value_caster/logger"
 
 ValueCaster::EventRouter.draw do
   map :reaction_added,  action: :value_reaction
