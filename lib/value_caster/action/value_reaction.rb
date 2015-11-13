@@ -65,10 +65,6 @@ module ValueCaster
         logger.info "Finish to append message to Google Spread Sheet `#{row.join(',')}`"
       end
 
-      def logger
-        Logger.logger
-      end
-
       class DeliveryMessage
         def initialize(data)
           @data   = data
