@@ -69,9 +69,16 @@ module ValueCaster
         def initialize(data)
           @data   = data
           @client = Slack::Client.new(token: ENV['SLACK_BOT_API_TOKEN'])
+
+          reactions = @client.reactions_list(user: data.user)
+          reactions = Hashie::Mash.new(reactions)
+
+          @reacted_message = reactions.items.first.message || reactions.items.first.file
+
+          logger.info "Reacted message is #{@reacted_message.to_hash}"
         end
 
-        attr_reader :data
+        attr_reader :data, :reacted_message
 
         def announcer
           slack_username(reacted_message.user)
@@ -98,14 +105,6 @@ module ValueCaster
         end
 
         private
-
-        def reacted_message
-          @reacted_message ||= (
-            reactions = @client.reactions_list(user: data.user)
-            reactions = Hashie::Mash.new(reactions)
-            reactions.items.first.message || reactions.items.first.file
-          )
-        end
 
         def slack_username(user_id)
           user_info = @client.users_info(user: user_id)
