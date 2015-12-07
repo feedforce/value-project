@@ -78,11 +78,11 @@ module ValueCaster
         end
 
         def permalink
-          reacted_message.permalink
+          reacted_message && reacted_message.permalink
         end
 
         def reaction_count
-          reacted_message.reactions.find {|react| react.name == 'value' }['count']
+          reacted_message && reacted_message.reactions.find {|react| react.name == 'value' }['count']
         end
 
         def reacted_username
@@ -90,7 +90,7 @@ module ValueCaster
         end
 
         def text
-          reacted_message.text
+          reacted_message && reacted_message.text
         end
 
         def timestamp
