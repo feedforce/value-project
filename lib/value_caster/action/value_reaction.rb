@@ -74,11 +74,12 @@ module ValueCaster
           reactions = Hashie::Mash.new(reactions)
 
           @reacted_message = reactions.items.first.message || reactions.items.first.file
+          @type = reactions.items.first.type
 
           logger.info "Reacted message is #{@reacted_message.to_hash}"
         end
 
-        attr_reader :data, :reacted_message
+        attr_reader :data, :reacted_message, :type
 
         def announcer
           slack_username(reacted_message.user)
