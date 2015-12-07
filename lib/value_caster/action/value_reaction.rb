@@ -110,6 +110,10 @@ module ValueCaster
           user_info = @client.users_info(user: user_id)
           Hashie::Mash.new(user_info).user.name
         end
+
+        def logger
+          Logger.logger
+        end
       end
 
       class SpreadSheet
