@@ -103,7 +103,7 @@ module ValueCaster
           @reacted_message ||= (
             reactions = @client.reactions_list(user: data.user)
             reactions = Hashie::Mash.new(reactions)
-            reactions.items.first.message
+            reactions.items.first.message || reactions.items.first.file
           )
         end
 
