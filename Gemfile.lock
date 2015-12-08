@@ -6,6 +6,7 @@ PATH
       foreman
       google_drive
       hashie
+      pry
       redis-objects
       slack-api (~> 1.1.6)
 
@@ -125,7 +126,6 @@ DEPENDENCIES
   bundler (~> 1.10)
   minitest-emoji
   minitest-power_assert
-  pry
   rake (~> 10.0)
   value_caster!
 
