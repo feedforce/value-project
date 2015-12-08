@@ -1,7 +1,5 @@
 require "google/api_client"
 require "google_drive"
-require 'redis/objects'
-require 'redis/lock'
 
 # monkey patch
 module Slack
