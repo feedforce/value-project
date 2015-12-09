@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'value_caster/version'
+require 'value_project/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "value_caster"
-  spec.version       = ValueCaster::VERSION
+  spec.name          = "value_project"
+  spec.version       = ValueProject::VERSION
   spec.authors       = ["mgi166"]
   spec.email         = ["skskoari@gmail.com"]
 
