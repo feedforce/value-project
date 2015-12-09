@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require "value_caster"
+require "value_project"
 
 require "pry"
 Pry.start
