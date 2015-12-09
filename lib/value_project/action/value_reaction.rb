@@ -116,8 +116,6 @@ module ValueProject
       end
 
       class SpreadSheet
-        SHEET_ID = '18DwKbuMfj22H9XWm-HigilxZHtFa_n8F0fwB_K-fNnE'
-
         def initialize
           signet = Signet::OAuth2::Client.new(
             client_id: ENV['GOOGLE_CLIENT_ID'],
@@ -130,7 +128,7 @@ module ValueProject
 
           signet.refresh!
           @work_sheet = GoogleDrive.login_with_oauth(signet.access_token)
-                          .spreadsheet_by_key(SHEET_ID)
+                          .spreadsheet_by_key(ENV['GOOGLE_SPREAD_SHEET_ID'])
                           .worksheets[0]
         end
 
