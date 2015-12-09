@@ -1,34 +1,34 @@
 require './test/test_helper'
-require './lib/value_caster/event_router'
-require './lib/value_caster/event'
+require './lib/value_project/event_router'
+require './lib/value_project/event'
 
-describe ValueCaster::EventRouter do
+describe ValueProject::EventRouter do
   describe 'draw' do
     before do
-      ValueCaster::EventRouter.event_collection.clear
+      ValueProject::EventRouter.event_collection.clear
     end
 
     after do
-      ValueCaster::EventRouter.event_collection.clear
+      ValueProject::EventRouter.event_collection.clear
     end
 
-    it 'event collection has event names in hash after ValueCaster::EventRouter#draw' do
-      ValueCaster::EventRouter.draw do
+    it 'event collection has event names in hash after ValueProject::EventRouter#draw' do
+      ValueProject::EventRouter.draw do
         map :event1, action: :action1
         map :event2, action: :action2
       end
 
       assert {
-        ValueCaster::EventRouter.event_collection.keys == [ :event1, :event2 ]
+        ValueProject::EventRouter.event_collection.keys == [ :event1, :event2 ]
       }
     end
 
-    it 'Event has currect attributes after ValueCaster::EventRouter#draw' do
-      ValueCaster::EventRouter.draw do
+    it 'Event has currect attributes after ValueProject::EventRouter#draw' do
+      ValueProject::EventRouter.draw do
         map :event, action: :action
       end
 
-      event = ValueCaster::EventRouter.event_collection[:event]
+      event = ValueProject::EventRouter.event_collection[:event]
 
       assert { event.name   == :event }
       assert { event.action == :action }
@@ -37,7 +37,7 @@ describe ValueCaster::EventRouter do
 
     it 'if EventRouter#map does not specify `action`, raises error' do
       begin
-        ValueCaster::EventRouter.draw do
+        ValueProject::EventRouter.draw do
           map :event
         end
       rescue => e
