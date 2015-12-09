@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    value_caster (0.1.0)
+    value_project (0.1.0)
       activesupport
       foreman
       google_drive
@@ -127,7 +127,7 @@ DEPENDENCIES
   minitest-emoji
   minitest-power_assert
   rake (~> 10.0)
-  value_caster!
+  value_project!
 
 BUNDLED WITH
    1.10.5
