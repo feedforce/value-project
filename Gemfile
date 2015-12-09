@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in value_caster.gemspec
+# Specify your gem's dependencies in value_project.gemspec
 gemspec
 
 ruby '2.2.2'
