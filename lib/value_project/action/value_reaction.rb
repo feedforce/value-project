@@ -10,7 +10,7 @@ module Slack
   end
 end
 
-module ValueCaster
+module ValueProject
   module Action
     class ValueReaction < Base
       def initialize

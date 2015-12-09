@@ -1,8 +1,8 @@
-module ValueCaster
+module ValueProject
   module Action
     class BotInvitation < Base
       def call(data)
-        ValueCaster::SlackChannel.new.leave_bot(data.channel)
+        ValueProject::SlackChannel.new.leave_bot(data.channel)
       end
     end
   end

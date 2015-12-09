@@ -1,4 +1,4 @@
-module ValueCaster
+module ValueProject
   class EventRouter
     def self.event_collection
       @event_collection ||= {}

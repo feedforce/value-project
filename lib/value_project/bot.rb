@@ -1,4 +1,4 @@
-module ValueCaster
+module ValueProject
   class Bot
     def initialize
       @rtm = Slack::Client.new(token: ENV['SLACK_BOT_API_TOKEN']).realtime

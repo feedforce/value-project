@@ -1,4 +1,4 @@
-module ValueCaster
+module ValueProject
   class SlackChannel
     BOT_USER_ID = 'U0BFF4VB7'
 

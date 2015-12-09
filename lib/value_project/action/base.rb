@@ -1,4 +1,4 @@
-module ValueCaster
+module ValueProject
   module Action
     class Base
       def call(data)

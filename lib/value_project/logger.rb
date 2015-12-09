@@ -1,4 +1,4 @@
-module ValueCaster
+module ValueProject
   class Logger
     class << self
       def logger

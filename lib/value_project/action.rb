@@ -1,3 +1,3 @@
-require 'value_caster/action/base'
-require 'value_caster/action/value_reaction'
-require 'value_caster/action/bot_invitation'
+require 'value_project/action/base'
+require 'value_project/action/value_reaction'
+require 'value_project/action/bot_invitation'
