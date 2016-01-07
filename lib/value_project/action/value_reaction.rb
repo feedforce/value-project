@@ -80,7 +80,7 @@ module ValueProject
         attr_reader :data, :reacted_message, :type
 
         def announcer
-          slack_username(reacted_message.user)
+          reacted_message.user? ? slack_username(reacted_message.user) : reacted_message.username
         end
 
         def permalink
