@@ -1,4 +1,4 @@
-require "google/api_client"
+require "googleauth"
 require "google_drive"
 
 module ValueProject
@@ -108,17 +108,15 @@ module ValueProject
 
       class SpreadSheet
         def initialize
-          signet = Signet::OAuth2::Client.new(
+          credentials = Google::Auth::UserRefreshCredentials.new(
             client_id: ENV['GOOGLE_CLIENT_ID'],
             client_secret: ENV['GOOGLE_CLIENT_SECRET'],
-            authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
-            token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
-            scope: [ "https://www.googleapis.com/auth/drive" ],
-            refresh_token: ENV['GOOGLE_REFRESH_TOKEN']
+            scope: ["https://www.googleapis.com/auth/drive"],
           )
+          credentials.refresh_token = ENV['GOOGLE_REFRESH_TOKEN']
+          credentials.fetch_access_token!
 
-          signet.refresh!
-          @work_sheet = GoogleDrive.login_with_oauth(signet.access_token)
+          @work_sheet = GoogleDrive::Session.from_credentials(credentials)
                           .spreadsheet_by_key(ENV['GOOGLE_SPREAD_SHEET_ID'])
                           .worksheets[0]
         end
