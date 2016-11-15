@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'google_drive', '1.0.4'
   spec.add_dependency 'redis-objects'
   spec.add_dependency 'activesupport'
+  spec.add_dependency 'celluloid-io'
   spec.add_dependency 'hashie'
   spec.add_dependency 'foreman'
   spec.add_dependency "pry" # for debug in heroku.
