@@ -1,15 +1,6 @@
 require "google/api_client"
 require "google_drive"
 
-# monkey patch
-module Slack
-  class Client
-    def reactions_list(options = {})
-      post('reactions.list', options)
-    end
-  end
-end
-
 module ValueProject
   module Action
     class ValueReaction < Base
