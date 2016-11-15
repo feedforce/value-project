@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest-power_assert"
 
   spec.add_dependency 'slack-ruby-client'
-  spec.add_dependency 'google_drive', '1.0.4'
+  spec.add_dependency 'google_drive'
   spec.add_dependency 'redis-objects'
   spec.add_dependency 'activesupport'
   spec.add_dependency 'celluloid-io'
