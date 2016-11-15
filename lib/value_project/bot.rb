@@ -16,7 +16,7 @@ module ValueProject
 
     def start
       logger.info 'Run Slack realtime client start...'
-      @rtm.start
+      @rtm.start!
     end
 
     def setup
