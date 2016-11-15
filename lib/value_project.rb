@@ -1,6 +1,8 @@
 require 'hashie/mash'
 require 'active_support'
 require 'active_support/core_ext'
+require 'celluloid/current'
+require 'celluloid/io'
 require 'slack'
 require "value_project/version"
 require 'value_project/concern/slack_channel'

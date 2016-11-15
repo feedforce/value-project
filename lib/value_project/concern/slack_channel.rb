@@ -3,7 +3,7 @@ module ValueProject
     BOT_USER_ID = 'U0BFF4VB7'
 
     def initialize
-      @client = Slack::Client.new(token: ENV['SLACK_USER_API_TOKEN'])
+      @client = Slack::Web::Client.new(token: ENV['SLACK_USER_API_TOKEN'])
     end
 
     attr_reader :client
