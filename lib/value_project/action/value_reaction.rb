@@ -14,7 +14,7 @@ module ValueProject
   module Action
     class ValueReaction < Base
       def initialize
-        @client = Slack::Client.new(token: ENV['SLACK_BOT_API_TOKEN'])
+        @client = Slack::Web::Client.new(token: ENV['SLACK_BOT_API_TOKEN'])
       end
 
       def call(data)
@@ -66,7 +66,7 @@ module ValueProject
       class DeliveryMessage
         def initialize(data)
           @data   = data
-          @client = Slack::Client.new(token: ENV['SLACK_BOT_API_TOKEN'])
+          @client = Slack::Web::Client.new(token: ENV['SLACK_BOT_API_TOKEN'])
 
           reactions = @client.reactions_list(user: data.user)
           reactions = Hashie::Mash.new(reactions)
